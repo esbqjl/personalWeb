@@ -1,6 +1,6 @@
-# [kuko](https://www.kuko.icu)
+# [happychamber](https://happychamber.xyz)
 
-![kuko.ico](/static/index/images/favicon.ico)
+![happychamber.ico](/static/index/images/favicon.ico)
 
 ___
 
