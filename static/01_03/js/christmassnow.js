@@ -56,17 +56,17 @@
                 for (var i = 1; i <= 25; i++) {
                     if (settings.snowflaketype === i) {
                         if (i === 21) {
-                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/10_12/images/snowflake' + number1 + '.png"/>'
+                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/01_03/images/snowflake' + number1 + '.png"/>'
                         } else if (i === 22) {
-                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/10_12/images/snowflake' + number2 + '.png"/>'
+                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/01_03/images/snowflake' + number2 + '.png"/>'
                         } else if (i === 23) {
-                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/10_12/images/snowflake' + number3 + '.png"/>'
+                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/01_03/images/snowflake' + number3 + '.png"/>'
                         } else if (i === 24) {
-                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/10_12/images/snowflake' + number4 + '.png"/>'
+                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/01_03/images/snowflake' + number4 + '.png"/>'
                         } else if (i === 25) {
-                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/10_12/images/snowflake' + number5 + '.png"/>'
+                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/01_03/images/snowflake' + number5 + '.png"/>'
                         } else {
-                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/10_12/images/snowflake' + i + '.png"/>'
+                            content = '<img class="flakeimage" style="height:' + imageSize + 'px; width:' + imageSize + 'px;"src="/static/01_03/images/snowflake' + i + '.png"/>'
                         }
                         var movement = settings.snowflakemovement;
                         var clone = drop

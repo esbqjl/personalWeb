@@ -52,7 +52,7 @@ def PYahao():
 
 
 @app.route("/01_03")
-def fun10_12():
+def fun01_03():
     return render_template("01_03.html")
 
 
