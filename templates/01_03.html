@@ -1,0 +1,536 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to Internet</title>
+    <script
+      id="jqbb"
+      src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"
+    ></script>
+  <!--  /*<!-- 播放器css -->
+    <link rel="stylesheet" href="/static/01_03/css/common.css" />
+    <!-- 相册css -->
+    <link type="text/css" href="/static/01_03/css/style.css" rel="stylesheet" />
+    /*/*<style type="text/css">
+   	
+      html,
+      body {
+        margin: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        cursor: none;
+        background: black;
+        background: linear-gradient(to bottom, #000000 0%, #5788fe 100%);
+      }
+
+      .filter {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #fe5757;
+        animation: colorChange 30s ease-in-out infinite;
+        animation-fill-mode: both;
+        mix-blend-mode: overlay;
+      }
+
+      @keyframes colorChange {
+        0%,
+        100% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.9;
+        }
+      }
+
+      .landscape {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("/static/01_03/xkbg.png");
+        background-size: 1000px 250px;
+        background-repeat: repeat-x;
+        background-position: center bottom;
+      }
+      /* 雪花颜色 
+
+      .maple {
+        position: absolute;
+        top: 0;
+        color: hsl(350, 100%, 88%);
+        /* background: linear-gradient(to bottom, #000000 0%, #5788fe 100%); 
+      }
+      #music {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+    </style>
+    <script type="text/javascript" src="/static/01_03/js/christmassnow.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("body").christmassnow({
+          snowflaketype: 23, // 1 to 25 types of flakes are available change the number from 1 to 25. each one contain different images.
+          snowflakesize: 2, //snowflakesize is 1 then it get the size of the image as random , if the snowflakesize is 2 means size of the image as custom
+          snowflakedirection: 1, // 1 means default no wind (top to bottom), 2 means random, 3 means left to right and 4 means  right to left
+          snownumberofflakes: 4, // number of flakes is user option
+          snowflakespeed: 10, // falling speed of flake 10 sec is default
+          flakeheightandwidth: 15, // if you are mention that option flakesize is 2 then this flakeheightandwidth should work values are in pixels 16*16.
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <!-- 红色雪飘落 -->
+    <div class="maplebg"></div>
+
+    <script>
+      var d = "<div class='maple'>❄<div>";
+      setInterval(function () {
+        var f = $(document).width();
+        var e = Math.random() * f - 300; // 雪花的定位left值
+        var o = 0.2 + Math.random(); // 雪花的透明度
+        var fon = 25 + Math.random() * 10; // 雪花大小
+        var l = e - 100 + 200 * Math.random(); // 雪花的横向位移
+        var k = 8000 + 5000 * Math.random();
+        var deg = Math.random() * 360; // 雪花的方向
+        $(d)
+          .clone()
+          .appendTo(".maplebg")
+          .css({
+            left: e + "px",
+            opacity: o,
+            transform: "rotate(" + deg + "deg)",
+            "font-size": fon,
+          })
+          .animate(
+            {
+              top: "550px",
+              left: l + "px",
+              opacity: 0.1,
+            },
+            k,
+            "linear",
+            function () {
+              $(this).remove();
+            }
+          );
+      }, 500);
+    </script>
+    <div
+      style="
+        text-align: center;
+        margin: 20px 0;
+        font: normal 14px/24px 'MicroSoft YaHei';
+      "
+    ></div>
+
+    <!-- 白雪花飘落 -->
+    <div class="drop"></div>
+    <!-- 打字 -->
+    <div class="typing">
+      <!-- 字幕 -->
+      <h2 class="header-sub-title" id="word"></h2>
+      <h2 class="header-sub-title blink">|</h2>
+    </div>
+    <!-- 星空 -->
+    <div class="landscape"></div>
+    <div class="filter"></div>
+    <canvas id="canvas"></canvas>
+     <!--自动播放 
+     <audio autoplay="autopaly">
+      <source src="/static/01_03/yinyue.mp3" type="audio/mp3" />
+    </audio>-->
+    
+    <!-- 带按钮播放 -->
+    <!-- loop循环 -->
+     <!--<audio
+      src="/static/01_03/yinyue.mp3"
+      controls="controls"
+      autoplay="autoplay"
+      loop="loop"
+      id="music"
+    ></audio> -->
+    <!-- 相册 -->
+    <div id="jsi-snow-container" class="container"></div>
+    <div class="box">
+      <ul class="minbox">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <ol class="maxbox">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ol>
+    </div>
+    <!-- 播放器 -->
+    <div id="app">
+      <div class="container_player">
+        <div class="music-box">
+          <!-- <img src="images/avatar.jpg" /> -->
+          <img src="/static/01_03/img/01.png" />
+          <div class="mask">
+            <div class="mplayer" onclick="play()">
+              <i class="fa">
+                <span class="before"></span>
+                <span class="after"> </span>
+              </i>
+              <svg
+                class="loadingSvg"
+                width="25"
+                height="25"
+                viewBox="0,0,50,50"
+                style="
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                "
+              >
+                <circle></circle>
+              </svg>
+            </div>
+            <div class="m-circle m-progress">
+              <svg width="163" height="163" viewBox="0,0,163,163">
+                <circle
+                  cx="81"
+                  cy="81"
+                  r="159"
+                  stroke-width="8"
+                  stroke="rgba(255, 206, 113, 0.2)"
+                  fill="rgba(0,0,0,.2)"
+                ></circle>
+                <circle
+                  class="a"
+                  cx="81"
+                  cy="81"
+                  r="159"
+                  stroke-width="6"
+                  stroke="rgba(255, 206, 113, 1)"
+                  fill="none"
+                  stroke-dasharray="0 999"
+                  transform="matrix(0,-1,1,0,0,163)"
+                ></circle>
+              </svg>
+            </div>
+            <div class="m_time">
+              <span class="mplayer_curtime">00:00</span>
+              <span class="m-join">/</span>
+              <span class="mplayer_durtime">00:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 音乐 -->
+    
+    <audio id="myAudio" src="/static/01_03/music/yinyue.mp3"></audio>
+    
+  </body>
+  <script>
+    function Star(id, x, y) {
+      this.id = id;
+      this.x = x;
+      this.y = y;
+      this.r = Math.floor(Math.random() * 2) + 1;
+      var alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+      this.color = "rgba(255,255,255," + alpha + ")";
+    }
+
+    Star.prototype.draw = function () {
+      ctx.fillStyle = this.color;
+      ctx.shadowBlur = this.r * 2;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+      ctx.closePath();
+      ctx.fill();
+    };
+
+    Star.prototype.move = function () {
+      this.y -= 0.15;
+      if (this.y <= -10) this.y = HEIGHT + 10;
+      this.draw();
+    };
+
+    Star.prototype.die = function () {
+      stars[this.id] = null;
+      delete stars[this.id];
+    };
+
+    function Dot(id, x, y, r) {
+      this.id = id;
+      this.x = x;
+      this.y = y;
+      this.r = Math.floor(Math.random() * 5) + 1;
+      this.maxLinks = 2;
+      this.speed = 0.5;
+      this.a = 0.5;
+      this.aReduction = 0.005;
+      this.color = "rgba(255,255,255," + this.a + ")";
+      this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+
+      this.dir = Math.floor(Math.random() * 140) + 200;
+    }
+
+    Dot.prototype.draw = function () {
+      ctx.fillStyle = this.color;
+      ctx.shadowBlur = this.r * 2;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+      ctx.closePath();
+      ctx.fill();
+    };
+
+    Dot.prototype.link = function () {
+      if (this.id == 0) return;
+      var previousDot1 = getPreviousDot(this.id, 1);
+      var previousDot2 = getPreviousDot(this.id, 2);
+      var previousDot3 = getPreviousDot(this.id, 3);
+      if (!previousDot1) return;
+      ctx.strokeStyle = this.linkColor;
+      ctx.moveTo(previousDot1.x, previousDot1.y);
+      ctx.beginPath();
+      ctx.lineTo(this.x, this.y);
+      if (previousDot2 != false) ctx.lineTo(previousDot2.x, previousDot2.y);
+      if (previousDot3 != false) ctx.lineTo(previousDot3.x, previousDot3.y);
+      ctx.stroke();
+      ctx.closePath();
+    };
+
+    function getPreviousDot(id, stepback) {
+      if (id == 0 || id - stepback < 0) return false;
+      if (typeof dots[id - stepback] != "undefined") return dots[id - stepback];
+      else return false; //getPreviousDot(id - stepback);
+    }
+
+    Dot.prototype.move = function () {
+      this.a -= this.aReduction;
+      if (this.a <= 0) {
+        this.die();
+        return;
+      }
+      this.color = "rgba(255,255,255," + this.a + ")";
+      this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+      (this.x = this.x + Math.cos(degToRad(this.dir)) * this.speed),
+        (this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed);
+
+      this.draw();
+      this.link();
+    };
+
+    Dot.prototype.die = function () {
+      dots[this.id] = null;
+      delete dots[this.id];
+    };
+
+    var canvas = document.getElementById("canvas"),
+      ctx = canvas.getContext("2d"),
+      WIDTH,
+      HEIGHT,
+      mouseMoving = false,
+      mouseMoveChecker,
+      mouseX,
+      mouseY,
+      stars = [],
+      initStarsPopulation = 80,
+      dots = [],
+      dotsMinDist = 2,
+      maxDistFromCursor = 50;
+
+    setCanvasSize();
+    init();
+
+    function setCanvasSize() {
+      (WIDTH = document.documentElement.clientWidth),
+        (HEIGHT = document.documentElement.clientHeight);
+
+      canvas.setAttribute("width", WIDTH);
+      canvas.setAttribute("height", HEIGHT);
+    }
+
+    function init() {
+      ctx.strokeStyle = "white";
+      ctx.shadowColor = "white";
+      for (var i = 0; i < initStarsPopulation; i++) {
+        stars[i] = new Star(
+          i,
+          Math.floor(Math.random() * WIDTH),
+          Math.floor(Math.random() * HEIGHT)
+        );
+        //stars[i].draw();
+      }
+      ctx.shadowBlur = 0;
+      animate();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+      for (var i in stars) {
+        stars[i].move();
+      }
+      for (var i in dots) {
+        dots[i].move();
+      }
+      drawIfMouseMoving();
+      requestAnimationFrame(animate);
+    }
+
+    window.onmousemove = function (e) {
+      mouseMoving = true;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      clearInterval(mouseMoveChecker);
+      mouseMoveChecker = setTimeout(function () {
+        mouseMoving = false;
+      }, 100);
+    };
+
+    function drawIfMouseMoving() {
+      if (!mouseMoving) return;
+
+      if (dots.length == 0) {
+        dots[0] = new Dot(0, mouseX, mouseY);
+        dots[0].draw();
+        return;
+      }
+
+      var previousDot = getPreviousDot(dots.length, 1);
+      var prevX = previousDot.x;
+      var prevY = previousDot.y;
+
+      var diffX = Math.abs(prevX - mouseX);
+      var diffY = Math.abs(prevY - mouseY);
+
+      if (diffX < dotsMinDist || diffY < dotsMinDist) return;
+
+      var xVariation = Math.random() > 0.5 ? -1 : 1;
+      xVariation =
+        xVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+      var yVariation = Math.random() > 0.5 ? -1 : 1;
+      yVariation =
+        yVariation * Math.floor(Math.random() * maxDistFromCursor) + 1;
+      dots[dots.length] = new Dot(
+        dots.length,
+        mouseX + xVariation,
+        mouseY + yVariation
+      );
+      dots[dots.length - 1].draw();
+      dots[dots.length - 1].link();
+    }
+    //setInterval(drawIfMouseMoving, 17);
+
+    function degToRad(deg) {
+      return deg * (Math.PI / 180);
+    }
+    // 打印字
+    const words = [
+      "❉生日快乐",
+      "❉你好可怜哦，今天明明是你的生日却还要上班，但是没关系，因为你收到了我的祝福，相信你今天过得会很开心!",
+      "❉蛋糕带着甜甜的清香，烛光在心底闪耀，当你默默许愿的时候，我也偷偷为你许下一个心愿，愿你幸福快乐每一天，生日快乐!",
+      "❉有些心动，一旦开始，便覆水难收。",
+      "❉我希望你",
+      "❉彩虹是太阳的花边，装饰着晴朗的每一天，星星是月亮的蕾丝，点缀着浪漫的每一晚，快乐是生日的祝福，希望你拥有美妙的每一刻",
+      "❉看今日的艳阳，那是我为你点亮的烛光;望小鸟的飞翔，那是我为你祝福的翅膀;抬头将蓝天仰望，许下生日的愿望，祝你美梦伴着吉祥，绽放幸福的灵光!生日...",
+      "❉Wishing you a happy birthday! May the best and loving things be some of the joy your birthday brings.",
+      "❉今天的你要加班吗？算了吧，做一回自己！",
+      "❉Do one thing at a time, and do well.一次只做一件事，做到最好！",
+      "❉Believe in yourself.相信你自己！",
+      "❉怎么样？害怕失败吗？",
+      "❉向日葵永远追溯太阳，你永远属于快乐！",
+      "❉Never say die.永不气馁！",
+      "❉今天，有个”傻子“在过生日",
+      "❉在2021年/10/12|但是她还是在上班！",
+      "❉服务器会见证一切，这个网页永留！",
+      "❉第一次在此服务器过生日！铭记！",
+      "❉今天，你说什么就是什么",
+      "❉誕生日おめでとうございます！",
+      "❉すぐ目の前にあっても、手に入れる事が出来ないものがある。",
+      "❉ニンゲンはね、思い出がないと生きていけないんだよ。でもね、それなのに、思い出だけでは生きていけない。夢はいつかは覚めないといけない。人，如果没有回忆是活不下去的。但是，只有回忆却也是活不下去的。",
+      "❉泣いていいのはおトイレが……パパの胸の中だって 。能哭的地方，只有厕所……还有爸爸的怀里。——《Clannad》",
+      "❉生も死も、浄も不浄も爱憎も、重なり重なり続けて几星霜――揺るがぬ、大木。不论生抑或死，净抑或不净或者爱恨情仇都不断交迭的数个岁月－－屹立不摇的大木。",
+      "❉ひとつの目で昨日を见つめてる。一只眼眺望明天，另一只眼寻找过去。",
+      "❉今のお前は一人。现在的你不是一个人。",
+      "❉覚めることを忘れた夢は、それがどんなにしあわせな夢であったとしても、いつかは悲しみにかわってしまうから。因为梦总有一天会醒的。醒不来的梦，终有一天会变成悲哀。",
+      "❉もうすぐ、春が来る、君と出会った春が来る、君がいない…春が来る。",
+      "❉一体どんなスピードで生活すれば、あなたと再度出会えるのか。",
+      "❉めんま、见(み)ーつけた!! 见(み)つかっちゃった...",
+      "❉わたしの翼はもう忘れたどのように飞ぶ，私はずっとただふり飞んだ，飞べない翼、何の意味があるのか。",
+      "❉飞べない翼も意味がある，それはまだ飞ぶ时の思い出。",
+      "❉我的翅膀已经忘记了如何飞翔，因为我一直以来，只是重复着拍打翅膀的样子而已。无法飞翔的翅膀，还会有意义吗？",
+      "❉无法飞翔的翅膀也是有意义的，因为它是曾经翱翔于天空时，珍贵的回忆",
+      "❉世界は美しくなんかない。そしてそれ故に、美しい 这个世界并不美丽。但正因为如此，它才更显美丽。",
+      "❉やれることをやらないで、後悔（こうかい）するのは嫌（いや）なんだ。 我不愿忽略自己力所能及的事，之后再后悔。",
+      "❉🌹——————PYmili🌹",
+    ];
+    let i = 0;
+    let timer;
+    // speed in ms
+    let deleteDelay = 3000;
+    let typeSpeed = 100;
+    let delSpeed = 50;
+    /* 开始编写文字 */
+    function typingEffect() {
+      let word = words[i].split("");
+      var loopTyping = function () {
+        if (word.length > 0) {
+          document.getElementById("word").innerHTML += word.shift();
+        } else {
+          delay(function () {
+            deletingEffect(); // do stuff
+          }, deleteDelay); // end delay
+          // deletingEffect();
+          return false;
+        }
+        timer = setTimeout(loopTyping, typeSpeed);
+      };
+      loopTyping();
+    }
+
+    function deletingEffect() {
+      let word = words[i].split("");
+      var loopDeleting = function () {
+        if (word.length > 0) {
+          word.pop();
+          document.getElementById("word").innerHTML = word.join("");
+        } else {
+          if (words.length > i + 1) {
+            i++;
+          }
+          // else {
+          //   i = 0;
+          // }
+          typingEffect();
+          return false;
+        }
+
+        timer = setTimeout(loopDeleting, delSpeed);
+      };
+
+      loopDeleting();
+    }
+
+    var delay = (function () {
+      var timer = 0;
+      return function (callback, ms) {
+        clearTimeout(timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
+    typingEffect();
+  </script>
+  <script src="/static/01_03/js/common.js"></script>
+</html>
