@@ -1,0 +1,42 @@
+
+.home-content h3 {
+    font-size: 2.2rem;
+    margin-top: 10%;
+}
+
+.home-content__text p {
+    font-size: 2.2rem;
+    margin-right: 15%;
+    margin-left: 5%;
+    color: #E6E8FA;
+    margin-bottom: 5%;
+    
+    
+    
+}
+.scrollable-container {
+  overflow-y: scroll; /* Enable vertical scrolling */
+  height: 100%; /* Set to the full height of the viewport */
+  position: relative; /* Ensure it's positioned relative for z-index stacking */
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  
+}
+.scrollable-container-wrapper {
+    overflow: hidden;
+    height: 75vh; /* 或者根据需要调整高度 */
+  }
+
+::-webkit-scrollbar { 
+    width: 0 !important 
+}
+HTML {  
+    scrollbar-base-color: #fff;  
+    scrollbar-base-color: #fff;  
+    scrollbar-3dlight-color: #fff;  
+    scrollbar-highlight-color: #fff;  
+    scrollbar-track-color: #fff;  
+    scrollbar-arrow-color: #fff;  
+    scrollbar-shadow-color: #fff;  
+    scrollbar-dark-shadow-color: #fff;  
+} 
+

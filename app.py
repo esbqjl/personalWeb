@@ -25,25 +25,31 @@ def GetSlidesImage() -> list:
     # https://gitcode.net/qq_53280175/kuko/-/raw/master/static/index/PYDOME_TYPE/images/slides/{file}
     ImageList = []
 
-    walkPath = "./static/index//images/slides/"
+    walkPath = "./static/base/images/slides/"
     for paths, dirs, files in os.walk(walkPath):
         for file in files:
             ImageList.append(paths+file)
 
     return ImageList
 
+@app.context_processor
+def context_processor():
+    return dict(BgImageFile=GetSlidesImage())
 
 @app.route("/", )
 def index():
     return render_template(
-        "index.html",
-        BgImageFile=GetSlidesImage()
+        "index.html"
     )
 
 
 @app.route("/LSP")
 def LSP():
     return render_template("LSP.html")
+
+@app.route("/resume",)
+def resume():
+    return render_template("resume.html")
 
 
 @app.route("/love")

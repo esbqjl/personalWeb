@@ -9,7 +9,7 @@ particlesJS("particles-js", {
             type: "circle",
             stroke: { width: 0, color: "#000000" },
             polygon: { nb_sides: 8 },
-            image: { src: "../static/index/images/github.svg", width: 100, height: 100 }
+            image: { src: "../static/base/images/github.svg", width: 100, height: 100 }
         },
         opacity: {
             value: 0.5,
