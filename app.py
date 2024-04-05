@@ -70,6 +70,16 @@ def GetAudio(_DIR):
             Audio.append(f"{paths}{file}")
 
     return Audio
+    
+@app.route("/deep_learning")
+def deep_learning():
+    return render_template("deep_learning.html")
+    
+@app.route("/deep_learning/getState", methods=['GET'])
+def state_json():
+    # 这个路由用于返回JSON文件
+    # 假设你的JSON文件位于static/deep_learning/js/目录下
+    return send_from_directory('static/deep_learning/js', 'state.json')
 
 
 @app.route("/API/RandomAudio")
@@ -131,6 +141,6 @@ def PixivImage():
 if __name__ == '__main__':
     app.run(
         host="0.0.0.0",
-        port=8990,
+        port=12224,
         debug=True
     )
