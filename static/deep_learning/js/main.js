@@ -2,29 +2,29 @@ $(document).ready (function() {
     var alreadyFilled = false;
     var list;
     var currentFocus;
-    var American_States;
+    var Models;
     async function getStart(){ 
-            await fetch('https://www.happychamber.xyz/deep_learning/getState')
+            await fetch('/deep_learning/getModel')
     .then(function(resp){
       return resp.json();
     })
     .then(function(data){
-      American_States=data;
+      Models=data;
     }); initDialog();}
     function initdiv(e,a){
         var newElement = document.createElement('div');
         newElement.id = a; 
         
-        newElement.innerHTML = American_States.geonames[e].toponymName;
+        newElement.innerHTML = Models.modelnames[e].type_spec;
         $(".dialog").append(newElement);
-        list.push(American_States.geonames[e].toponymName);
+        list.push(Models.modelnames[e].type_spec);
     }
     function initDialog() {
         currentFocus=-1;
-        console.log(American_States.geonames);
+        console.log(Models.modelnames);
         clearDialog();
     
-        for (var i = 0; i < American_States.geonames.length; i++) {
+        for (var i = 0; i < Models.modelnames.length; i++) {
             initdiv(i,i);
         }   
     }
@@ -93,18 +93,116 @@ $(document).ready (function() {
     $('body').on('click', '.dialog > div', function() {
         $('.typeahead input').val($(this).text()).focus();
         $('.typeahead .close').addClass('visible');
+        
         alreadyFilled = true;
         list=[];
     });
+
     $('.typeahead .close').click(function() {
         alreadyFilled = false;
-        
-      $('.dialog').removeClass('open');
+        $('.dialog').removeClass('open');
     
-       initDialog();
-      $('.dialog').addClass('open');
+        initDialog();
+        $('.dialog').addClass('open');
         $('.typeahead input').val('').focus();
         $(this).removeClass('visible');
+    
+    });
+
+
+
+    $('#dl').click(function() {
+        alreadyFilled = false;
+        
+        $('.dialog').removeClass('open');
+        var type = $('.typeahead input').val();
+        var inputData = $('.sentence input').val();
+        console.log('即将发送的模型:',type);
+        console.log('即将发送的句子:',inputData);
+        $.ajax({
+            type: "POST",
+            url: "/deep_learning/useModel", 
+            contentType: 'application/json',
+            data:JSON.stringify( {
+                model: type,
+                input_data: inputData
+            }),
+            success: function(response) {
+                console.log('服务器响应:', response);
+                var labels = response.labels[0]
+                var probabilities =  response.probabilities[0]
+                var otherProbability = 1 - probabilities.reduce((acc, cur) => acc + cur, 0);
+                labels.push('Other');
+                console.log(labels); // 输出labels数组
+                console.log(probabilities); // 输出probabilities数组
+
+                probabilities.push(otherProbability);
+                var ctx = document.getElementById('myChart').getContext('2d');
+                
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label:"",
+                            data: probabilities.map(p => p * 100), 
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins:{
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw; // 获取当前数据点的值
+                                        const total = context.dataset.data.reduce((acc, cur) => acc + cur, 0); // 计算总和
+                                        const percentage = ((value / total) * 100).toFixed(2) + '%'; // 计算百分比并格式化为字符串
+                                        return label + ': ' + percentage; // 返回标签和百分比
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'left',
+                            }    
+                        }
+                        
+                    }
+                });
+            },
+            error: function(error) {
+                console.log('错误:', error);
+            }
+        });
+
+    
+    })
+
+    $('.sentence .close').click(function() {
+        alreadyFilled = false;
+        
+        $('.dialog').removeClass('open');
+    
+        $('.sentence input').val('').focus();
+        $(this).removeClass('visible');
+        $('.submit').removeClass('visible');
     
     });
       
@@ -113,8 +211,8 @@ $(document).ready (function() {
         str = str.toLowerCase();
         clearDialog();
         var a=0;
-        for (var i = 0; i < American_States.geonames.length; i++) {
-            if (American_States.geonames[i].toponymName.toLowerCase().includes(str)) {
+        for (var i = 0; i < Models.modelnames.length; i++) {
+            if (Models.modelnames[i].type_spec.toLowerCase().includes(str)) {
                 initdiv(i,a);
                 a++;
             }
@@ -125,6 +223,18 @@ $(document).ready (function() {
         alreadyFilled = false;
         $('.typeahead .close').addClass('visible');
         match($(this).val());
+    });
+
+    $('.sentence input').on('input', function() {
+        alreadyFilled = false;
+        if ($(this).val() === '') {
+            // 如果为空，隐藏.cancel按钮
+            $('.sentence .close, .submit').removeClass('visible');
+            
+        }else{
+            $('.sentence .close, .submit').addClass('visible');
+        }
+        
     });
     
     $('body').click(function(e) {

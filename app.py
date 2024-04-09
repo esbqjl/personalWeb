@@ -1,13 +1,14 @@
 import os
 import random
 import json
-
+import sys
+from pathlib import Path
 from flask import Flask
 from flask import render_template
 from flask import jsonify
 from flask import request
 from flask import send_file
-
+from static.deep_learning.python import predict
 # from PIL import Image
 # import requests
 #
@@ -77,9 +78,39 @@ def deep_learning():
     
 @app.route("/deep_learning/getState", methods=['GET'])
 def state_json():
+   
+    file = "static/deep_learning/js/state.json"
+    if os.path.isfile(file):
+        return send_file(file)
+    else:
+        return f"没有找到文件：{file}"
+    
+@app.route("/deep_learning/getModel", methods=['GET'])
+def model_json():
     # 这个路由用于返回JSON文件
-    # 假设你的JSON文件位于static/deep_learning/js/目录下
-    return send_from_directory('static/deep_learning/js', 'state.json')
+    file = "static/deep_learning/js/models.json"
+    if os.path.isfile(file):
+        return send_file(file)
+    else:
+        return f"没有找到文件：{file}"        
+
+@app.route("/deep_learning/useModel", methods=['POST'])
+def use_model():
+    try:
+        # 从请求中获取数据
+        data = request.json
+        model = data.get('model')
+        input_data = data.get('input_data')
+
+       
+        top_labels, top_probs = predict.predict(input_data)
+
+        # 返回结果
+        return jsonify({'labels': top_labels, 'probabilities': top_probs.tolist()})
+    except Exception as e:
+        # 返回错误信息
+        return jsonify({'error': str(e)}), 500
+
 
 
 @app.route("/API/RandomAudio")

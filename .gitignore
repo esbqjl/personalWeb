@@ -28,6 +28,11 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+# Deep Learning Model
+# usually these files are too big to push to github, will manually deploy it locally
+
+
+*.bin
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

@@ -1,0 +1,18 @@
+{
+  "totalResultsCount": 1,
+  "modelnames":[
+    {   
+      "type": "Classification",
+      "type_spec":"News Title Classification", 
+      "vocab_size": 21128,
+      "label_size": 15,
+      "learning_rate": 5e-05,
+      "batch_size": 64,
+      "epoch": 4,
+      "ckpt_name": "pytorch_model.bin",
+      "vocab_name": "vocab.json",
+      "pretrained_model": "bert-base-chinese"
+    }
+    
+  ]
+}

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
-{% block head %}
+{% block headfront %}
 <link rel="stylesheet" href="/static/deep_learning/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/deep_learning/css/mincss.css">
 <script src="https://kit.fontawesome.com/078ebd20cf.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 {% block home_logo %} 
 
@@ -12,27 +13,38 @@
 
 {% endblock %}
 {% block home_content__text %}
-    
+            
             <div class="container mt-5">
+                <h3 style="color: #6610f2 " class="text-center mb-3">
+                    <i style="color: white" class="fa-solid fa-computer"></i>                    
+                    What Deep Learning Can Do
+                </h3>
                 <div class="row">
                     <div class="col-md-6 m-auto">
-                        <h3 style="color: #6610f2 " class="text-center mb-3">
-                            <i style="color: black "class="fas fa-flag-usa"> </i>
-                            State LookUp
-                        </h3>
                         <div class="form-group typeahead">
-                            <input type="text" placeholder="What is your favorite US state?" class="form-control form-control-lg">
+                            <input type="text" placeholder="what do you want to do about this sentence" class="form-control form-control-lg">
                             <span class="close">Cancel</span>
                             <div class="dialog"> </div>
                         </div>
-                        
+
+                        <div class="form-group sentence">
+                            <input type="text" placeholder="Please write down your sentence here" class="form-control form-control-lg">
+                            <span class="close">Remove</span>
+                        </div>
+
+                        <div>
+                            <span id="dl" class="submit" > Submit</span>
+                        </div>     
+          
                     </div>
+                   
                 </div>
+                <canvas id="myChart" width="400" height="400"></canvas>
+                
             </div>
         
 {% endblock %}
 
-</body>
 {% block  script %} 
 <script src="/static/deep_learning/js/main.js"></script>
 {% endblock %}

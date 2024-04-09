@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
+    {% block headfront %}
+    {% endblock %}
     <!--- basic page needs
     ================================================== -->
     
@@ -29,7 +31,7 @@
     ================================================== -->
     <link rel="shortcut icon" href="/static/base/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/static/base/images/favicon.ico" type="image/x-icon">
-    {% block head %}
+    {% block headback %}
     {% endblock %}
 </head>
 <style>

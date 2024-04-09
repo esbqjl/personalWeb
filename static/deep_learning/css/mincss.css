@@ -1,13 +1,11 @@
-body {
-    background: #f5f5f5;
-  }
-  * {
+
+  .home-content__text * {
     font-family: 'helvetica neue';
     box-sizing: border-box;
   }
   .typeahead {
     background: #fff;
-    position: middle;
+    position: relative;
     width: 400px;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
   }
@@ -15,8 +13,8 @@ body {
     position: absolute;
     font-size: 13px;
     z-index: 10;
-    top: 78px;
-    left: calc(100% - 210px);
+    top: 25px;
+    right: 20px;
     color: #aaa;
     cursor: pointer;
     display: none;
@@ -24,7 +22,7 @@ body {
   .typeahead .close.visible {
     display: block;
   }
-  input {
+  .home-content__text input {
     padding: 10px 10px;
     font-weight: 300;
     width: 100%;
@@ -53,5 +51,41 @@ body {
   .dialog div:hover {
     background: #f2f2f2;
   }
+  .sentence {
+    background: #fff;
+    position: relative;
+    width: 400px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.24);
+  }
+  .home-content__text .submit {
+    position: relative;
+    font-size: 13px;
+    
+    z-index: 10;
+    left: 20px;
+    color: #aaa;
+    cursor: pointer;
+    display: none;
+  }
+  .submit.visible{
+    display: block;
+  }
+  .sentence .close {
+    position: absolute;
+    font-size: 13px;
+    z-index: 10;
+    top: 25px;
+    right: 20px;
+    color: #aaa;
+    cursor: pointer;
+    display: none;
+  }
   
-  
+  .sentence .close.visible {
+    display: block;
+  }
+
+  #Chart{
+    width: 1000px;
+    height: 1000px;
+  }
