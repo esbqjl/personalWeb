@@ -30,10 +30,10 @@ scipy==1.13.0
 soupsieve==2.4.1
 sympy==1.12
 threadpoolctl==3.4.0
-tokenizers==0.15.2
+tokenizers==0.19.1
 torch==2.2.2
 tqdm==4.66.2
-transformers==4.16.0
+transformers==4.40.1
 typing_extensions==4.11.0
 urllib3==2.0.3
 Werkzeug==2.3.6
