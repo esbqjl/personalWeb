@@ -96,21 +96,24 @@ def model_json():
 
 @app.route("/deep_learning/useModel", methods=['POST'])
 def use_model():
-    try:
+    
         # 从请求中获取数据
         data = request.json
         model = data.get('model')
+        print(model)
         input_data = data.get('input_data')
-
-       
-        top_labels, top_probs = predict.predict(input_data)
+        models = {}
+        with open('static/deep_learning/js/models.json','r') as f:
+            models = json.loads(f.read())
+        if model in models['modelnames']:
+            model_config = models['modelnames'][model]
+        else:
+            return jsonify({'error': 'Model not found'}), 404
+        top_labels, top_probs = predict.predict(model_config["pretrained_model"], model_config["model_dir"], input_data)
 
         # 返回结果
         return jsonify({'labels': top_labels, 'probabilities': top_probs.tolist()})
-    except Exception as e:
-        # 返回错误信息
-        return jsonify({'error': str(e)}), 500
-
+    
 
 
 @app.route("/API/RandomAudio")

@@ -41,9 +41,7 @@ class BertFCTrainer(BaseTrainer):
         self.optimizer = AdamW(optimizer_grouped_parameters,lr = self.learning_rate)    
         
         # use bert's vocab to update our vocab object
-        print("here",self.vocab.vocab_size)
-        self.vocab.set_vocab2id(self.model.get_bert_tokenizer().vocab)
-        print("here",self.vocab.vocab_size)
+        self.vocab.set_vocab2id(self.model.get_bert_tokenizer().vocab)  
         self.vocab.set_id2vocab({_id:char for char, _id in self.vocab.vocab2id.items()})
         self.vocab.set_unk_vocab_id(self.vocab.vocab2id['[UNK]'])
         self.vocab.set_pad_vocab_id(self.vocab.vocab2id['[PAD]'])
@@ -110,10 +108,8 @@ class BertFCTrainer(BaseTrainer):
         '''
         self.batch_size = batch_size
         self.epoch = epoch
-        
         self.vocab.build_vocab(labels=labels,build_texts=False,with_build_in_tag_id=False) # only bulid up the labels, bert vocab has those
         self._build_model()
-        print("here",self.vocab.vocab_size)
         self.vocab.save_vocab('{}/{}'.format(self.model_dir,self.vocab_name))
         self._save_config()
         
@@ -191,6 +187,5 @@ class BertFCTrainer(BaseTrainer):
         acc = (labels_predict_batch==labels_batch).sum().item()/labels_batch.shape[0]
         return float(acc)
                 
-        
     
 

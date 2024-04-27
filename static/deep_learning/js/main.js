@@ -15,7 +15,7 @@ $(document).ready (function() {
         var newElement = document.createElement('div');
         newElement.id = a; 
         
-        newElement.innerHTML = Models.modelnames[e].type_spec;
+        newElement.innerHTML = Models.modelnames[e].type_spec + " [" + Models.modelnames[e].language+"]";
         $(".dialog").append(newElement);
         list.push(Models.modelnames[e].type_spec);
     }
@@ -24,9 +24,12 @@ $(document).ready (function() {
         console.log(Models.modelnames);
         clearDialog();
     
-        for (var i = 0; i < Models.modelnames.length; i++) {
-            initdiv(i,i);
-        }   
+        // for (var i = 0; i < Models.modelnames.length; i++) {
+        //     initdiv(i,i);
+        // } 
+        Object.keys(Models.modelnames).forEach((key, index) => {
+            initdiv(key, index);
+        });  
     }
     function clearDialog() {
         list=[];
@@ -77,6 +80,7 @@ $(document).ready (function() {
         else if(e.keyCode==13){
             e.prevenDefault;
             var answer=list[currentFocus];
+            
             $('.typeahead input').val(answer).focus();
             alreadyFilled=true;
             clearDialog();
@@ -110,21 +114,22 @@ $(document).ready (function() {
     });
 
 
-
+    var myChart = null;
     $('#dl').click(function() {
         alreadyFilled = false;
         
         $('.dialog').removeClass('open');
         var type = $('.typeahead input').val();
         var inputData = $('.sentence input').val();
-        console.log('即将发送的模型:',type);
+        var model = type.replace(/\[.*?\]/g, '').trim();
+        console.log('即将发送的模型:',model);
         console.log('即将发送的句子:',inputData);
         $.ajax({
             type: "POST",
             url: "/deep_learning/useModel", 
             contentType: 'application/json',
             data:JSON.stringify( {
-                model: type,
+                model: model,
                 input_data: inputData
             }),
             success: function(response) {
@@ -139,7 +144,10 @@ $(document).ready (function() {
                 probabilities.push(otherProbability);
                 var ctx = document.getElementById('myChart').getContext('2d');
                 
-                var myChart = new Chart(ctx, {
+                if (myChart) {
+                    myChart.destroy();
+                }
+                myChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
                         labels: labels,

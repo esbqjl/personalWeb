@@ -1,18 +1,45 @@
 {
-  "totalResultsCount": 1,
-  "modelnames":[
-    {   
-      "type": "Classification",
-      "type_spec":"News Title Classification", 
-      "vocab_size": 21128,
-      "label_size": 15,
-      "learning_rate": 5e-05,
-      "batch_size": 64,
-      "epoch": 4,
-      "ckpt_name": "pytorch_model.bin",
-      "vocab_name": "vocab.json",
-      "pretrained_model": "bert-base-chinese"
-    }
+  "totalResultsCount": 2,
+
+  "modelnames":
+  {
+
+    "News Title Classification":
     
-  ]
+      {   
+
+        "type": "Classification",
+        "type_spec":"News Title Classification", 
+        "vocab_size": 21128,
+        "label_size": 15,
+        "learning_rate": 5e-05,
+        "batch_size": 64,
+        "epoch": 4,
+        "model_dir": "bertfc",
+        "ckpt_name": "pytorch_model.bin",
+        "vocab_name": "vocab.json",
+        "language": "Chinese",
+        "pretrained_model": "bert-base-chinese"
+      },
+
+    "Emotion Classification":
+      {   
+
+        "type": "Classification",
+        "type_spec":"Emotion Classification", 
+        "vocab_size": 30522,
+        "label_size": 6,
+        "learning_rate": 5e-05,
+        "batch_size": 64,
+        "epoch": 4,
+        "model_dir": "bertfc_emotion",
+        "ckpt_name": "pytorch_model.bin",
+        "vocab_name": "vocab.json",
+        "language": "English",
+        "pretrained_model": "bert-base-uncased"
+
+      }
+    
+  }
+
 }
